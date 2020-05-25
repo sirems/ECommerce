@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ECommerce.Models.DbModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.Data
+namespace ECommerce.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -12,5 +13,8 @@ namespace ECommerce.Data
             : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
+    
