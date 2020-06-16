@@ -5,9 +5,9 @@ using ECommerce.Models.DbModels;
 
 namespace ECommerce.DataAccess.IMainRepository
 {
-    public interface ICompanyRepository : IRepository<Company>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        void Update(Company company);
+        void Update(Category category);
     }
 }
-            
+    

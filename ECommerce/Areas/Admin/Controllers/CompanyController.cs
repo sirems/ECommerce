@@ -9,47 +9,45 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class CompanyController : Controller
     {
         #region Variables
         private readonly IUnitOfWork _uow;
         #endregion
-        
+
         #region CTOR
-        //ınjection
-        public CategoryController(IUnitOfWork uow)
+        public CompanyController(IUnitOfWork uow)
         {
             _uow = uow;
-        } 
+        }
         #endregion
 
         #region Actions
         public IActionResult Index()
         {
             return View();
-        } 
+        }
         #endregion
 
         #region API CALLS
-
         public IActionResult GetAll()
         {
-            var allObj = _uow.Category.GetAll();
+            var allObj = _uow.Company.GetAll();
             return Json(new { data = allObj });
         }
 
-        //DELETE
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var deleteData = _uow.Category.Get(id);
+            var deleteData = _uow.Company.Get(id);
             if (deleteData == null)
                 return Json(new { success = false, message = "Data Not Found!" });
 
-            _uow.Category.Remove(deleteData);
+            _uow.Company.Remove(deleteData);
             _uow.Save();
             return Json(new { success = true, message = "Delete Operation Successfully" });
         }
+
         #endregion
 
         /// <summary>
@@ -61,14 +59,14 @@ namespace ECommerce.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Upsert(int? id)
         {
-            Category cat = new Category();
+            Company cat = new Company();
             if (id == null)
             {
                 //This for Create
                 return View(cat);
             }
 
-            cat = _uow.Category.Get((int)id);
+            cat = _uow.Company.Get((int)id);
             if (cat != null)
             {
                 return View(cat);
@@ -78,24 +76,24 @@ namespace ECommerce.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Category category)
+        public IActionResult Upsert(Company Company)
         {
             if (ModelState.IsValid)
             {
-                if (category.Id == 0)
+                if (Company.Id == 0)
                 {
                     //Create
-                    _uow.Category.Add(category);
+                    _uow.Company.Add(Company);
                 }
                 else
                 {
                     //Update
-                    _uow.Category.Update(category);
+                    _uow.Company.Update(Company);
                 }
                 _uow.Save();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(Company);
         }
     }
 }

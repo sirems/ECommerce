@@ -92,7 +92,7 @@ namespace ECommerce.Areas.Admin.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategoryList = _uow.category.GetAll().Select(i => new SelectListItem
+                CategoryList = _uow.Category.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.CategoryName,
                     Value = i.Id.ToString()
@@ -169,7 +169,7 @@ namespace ECommerce.Areas.Admin.Controllers
             }
             else
             {
-                productVM.CategoryList = _uow.category.GetAll().Select(a => new SelectListItem
+                productVM.CategoryList = _uow.Category.GetAll().Select(a => new SelectListItem
                 {
                     Text = a.CategoryName,
                     Value = a.Id.ToString()

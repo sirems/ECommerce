@@ -6,12 +6,15 @@ namespace ECommerce.DataAccess.IMainRepository
 {
     public interface IUnitOfWork : IDisposable
     {
-        ICategoryRepository category { get; }
-        IProductRepository Product { get; }
+        ICategoryRepository Category { get; }
+        IProductRepository Product { get; } 
+        ICompanyRepository Company { get; }
         ICoverTypeRepository CoverType { get; }
+        IApplicationUserRepository ApplicationUser { get; } 
         ISPCallRepository sp_call { get; }
-
+            
 
         void Save();
     }
 }
+        
