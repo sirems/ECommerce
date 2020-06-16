@@ -14,15 +14,19 @@ namespace ECommerce.DataAccess.MainRepository
         {
             _db = db;
             category=new CategoryRepository(_db);
+            Product = new ProductRepository(_db);
+            CoverType = new CoverTypeRepository(_db);
             sp_call=new SPCallRepository(_db);
         }
         public void Dispose()
         {
             _db.Dispose();
-            
+                
         }
 
-        public ICategoryRepository category { get; private set; }
+        public ICategoryRepository category { get; private set; }   
+        public IProductRepository Product { get; private set; }
+        public ICoverTypeRepository CoverType { get; private set; }
         public ISPCallRepository sp_call { get; private set; }
         public void Save()
         {

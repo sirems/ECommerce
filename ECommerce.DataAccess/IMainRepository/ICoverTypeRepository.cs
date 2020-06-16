@@ -5,9 +5,9 @@ using ECommerce.Models.DbModels;
 
 namespace ECommerce.DataAccess.IMainRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ICoverTypeRepository:IRepository<CoverType>
     {
-        void Update(Category category);
+        void Update(CoverType category);
     }
 }
-    
+        

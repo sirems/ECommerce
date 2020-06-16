@@ -20,8 +20,6 @@ namespace ECommerce.DataAccess.MainRepository
             {
                 data.CategoryName = category.CategoryName;
             }
-
-            _db.SaveChanges();
         }
     }
 }

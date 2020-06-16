@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ECommerce.DataAccess.IMainRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ECommerce.Models;
+using ECommerce.Models.DbModels;
 
 namespace ECommerce.Areas.Customer.Controllers
 {
@@ -13,15 +15,18 @@ namespace ECommerce.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _uow;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IUnitOfWork uow)
         {
             _logger = logger;
+            _uow = uow;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _uow.Product.GetAll(includeProperties: "Category,CoverType");
+            return View(productList);
         }
 
         public IActionResult Privacy()
