@@ -137,25 +137,6 @@ namespace ECommerce.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    if (!await _roleManager.RoleExistsAsync(ProjectConstant.Role_Admin))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(ProjectConstant.Role_Admin));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(ProjectConstant.Role_Employee))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(ProjectConstant.Role_Employee));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(ProjectConstant.Role_User_Comp))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(ProjectConstant.Role_User_Comp));
-                    }
-                    if (!await _roleManager.RoleExistsAsync(ProjectConstant.Role_User_Indi))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(ProjectConstant.Role_User_Indi));
-                    }
-
-                    // await _userManager.AddToRoleAsync(user, ProjectConstant.Role_Admin);
-
                     if (user.Role == null)
                     {
                         await _userManager.AddToRoleAsync(user, ProjectConstant.Role_User_Indi);
@@ -169,25 +150,24 @@ namespace ECommerce.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, user.Role);
                     }
 
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = user.Id, code = code },
+                        protocol: Request.Scheme);
 
-                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    //var callbackUrl = Url.Page(
-                    //    "/Account/ConfirmEmail",
-                    //    pageHandler: null,
-                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                    //    protocol: Request.Scheme);
-
-                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
                     }
                     else
                     {
-                        
+
                         if (user.Role == null)
                         {
                             await _signInManager.SignInAsync(user, isPersistent: false);
@@ -195,8 +175,8 @@ namespace ECommerce.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                            ////TODO:Admin is Registering new user
-                           return RedirectToAction("Index", "User", new { Area = "Admin" });
+                            //TODO:Admin is Registering new user
+                            return RedirectToAction("Index", "User", new { Area = "Admin" });
                         }
 
                     }

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ECommerce.DataAccess.IMainRepository;
 using ECommerce.Models.DbModels;
+using ECommerce.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = ProjectConstant.Role_Admin)]
     public class CategoryController : Controller
     {
         #region Variables

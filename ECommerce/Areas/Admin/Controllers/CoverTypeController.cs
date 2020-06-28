@@ -8,9 +8,12 @@ using ECommerce.Utility;
 using Microsoft.AspNetCore.Mvc;
 
 using Dapper;
+using Microsoft.AspNetCore.Authorization;
+
 namespace ECommerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = ProjectConstant.Role_Admin)]
     public class CoverTypeController : Controller
     {
         #region Variables

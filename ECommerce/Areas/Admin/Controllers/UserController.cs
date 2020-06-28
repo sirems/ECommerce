@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using ECommerce.DataAccess.Data;
 using ECommerce.DataAccess.IMainRepository;
 using ECommerce.Models.DbModels;
+using ECommerce.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = ProjectConstant.Role_Admin)]
     public class UserController : Controller
     {
         #region Variables

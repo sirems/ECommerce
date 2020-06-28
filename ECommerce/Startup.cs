@@ -41,10 +41,36 @@ namespace ECommerce
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
             services.AddMvc();
+
+
+            #region Access Path
+            services.ConfigureApplicationCookie(options =>
+              {
+                  options.LoginPath = $"/Identity/Account/Login";
+                  options.LogoutPath = $"/Identity/Account/Logout";
+                  options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+              }); 
+            #endregion
+
+            #region Facebook Login
+            services.AddAuthentication().AddFacebook(options =>
+             {
+                 options.AppId = "2910788615697560";
+                 options.AppSecret = "ff971c6648f6f0b83843b63abd7ced25";
+             }); 
+            #endregion
+
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "732155383043-ji3gsucmccn87tt7r6sk66o1k63l4a0b.apps.googleusercontent.com";
+                options.ClientSecret = "hfwg0CKx4efPy5gDX6z0JtER";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +92,8 @@ namespace ECommerce
 
             app.UseRouting();
 
+
+            //for microsoft identity;
             app.UseAuthentication();
             app.UseAuthorization();
 

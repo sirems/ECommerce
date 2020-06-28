@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ECommerce.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = ProjectConstant.Role_Admin)]
+    [Authorize(Roles = ProjectConstant.Role_Admin)]
     public class ProductController : Controller
     {
 
