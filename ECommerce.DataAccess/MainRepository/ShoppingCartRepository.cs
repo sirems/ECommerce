@@ -5,10 +5,10 @@ using ECommerce.Models.DbModels;
     
 namespace ECommerce.DataAccess.MainRepository
 {
-    public class ShoppingCardRepository:Repository<ShoppingCart>,IShoppingCartRepository
+    public class ShoppingCartRepository:Repository<ShoppingCart>,IShoppingCartRepository
     {
         private readonly ApplicationDbContext _db;
-        public ShoppingCardRepository(ApplicationDbContext db) : base(db)
+        public ShoppingCartRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }

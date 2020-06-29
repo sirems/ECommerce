@@ -10,6 +10,9 @@ namespace ECommerce.DataAccess.IMainRepository
         IProductRepository Product { get; } 
         ICompanyRepository Company { get; }
         ICoverTypeRepository CoverType { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IOrderDetailRepository OrderDetail { get; }
         IApplicationUserRepository ApplicationUser { get; } 
         ISPCallRepository sp_call { get; }
             

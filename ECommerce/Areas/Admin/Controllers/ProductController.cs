@@ -128,7 +128,7 @@ namespace ECommerce.Areas.Admin.Controllers
                     var uploads = Path.Combine(webRootPath, @"images\products");
                     var extension = Path.GetExtension(files[0].FileName);
 
-                    if (productVM.Product.ImageUrl != null)
+                    if (productVM.Product.ImageUrl != null) 
                     {
                         var imageUrl = productVM.Product.ImageUrl;
                         var imagePath = Path.Combine(webRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
@@ -136,14 +136,14 @@ namespace ECommerce.Areas.Admin.Controllers
                         {
                             System.IO.File.Delete(imagePath);
                         }
-                    };
+                    }
 
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         files[0].CopyTo(fileStreams);
                     }
 
-                    productVM.Product.ImageUrl = @"images\products\" + fileName + extension;
+                    productVM.Product.ImageUrl = @"\images\products\" + fileName + extension;
 
                 }
                 else
@@ -154,14 +154,15 @@ namespace ECommerce.Areas.Admin.Controllers
                         productVM.Product.ImageUrl = productData.ImageUrl;
                     }
                 }
+
                 if (productVM.Product.Id == 0)
                 {
-                    //create
+                    //Create
                     _uow.Product.Add(productVM.Product);
                 }
                 else
                 {
-                    //update
+                    //Update
                     _uow.Product.Update(productVM.Product);
                 }
                 _uow.Save();

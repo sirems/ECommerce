@@ -22,7 +22,7 @@ namespace ECommerce.Utility
         private Task Execute(string sendGridApiKey, string subject, string message, string email)
         {
             var client = new SendGridClient(sendGridApiKey);
-            var from = new EmailAddress("siremsoydan96@gmail.com", "ECommerce");
+            var from = new EmailAddress("siremsoydan@icloud.com", "ECommerce");
             var to = new EmailAddress(email, "End User");
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "", message);
             return client.SendEmailAsync(msg);
